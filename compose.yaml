@@ -1,9 +1,43 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16-alpine'
+    container_name: globostreaming-postgres
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=globostreaming'
+      - 'POSTGRES_USER=globouser'
+      - 'POSTGRES_PASSWORD=globopass123'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U globouser -d globostreaming"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - globostreaming-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: globostreaming-app
+    ports:
+      - '8080:8080'
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/globostreaming'
+      - 'SPRING_DATASOURCE_USERNAME=globouser'
+      - 'SPRING_DATASOURCE_PASSWORD=globopass123'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - globostreaming-network
+
+networks:
+  globostreaming-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
