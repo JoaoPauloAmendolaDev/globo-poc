@@ -1,6 +1,7 @@
 package poc.globo.globostreaming.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,10 +40,19 @@ public class AuthService {
                 .cpf(request.cpf())
                 .build();
 
-        User savedUser = userRepository.save(user);
-        String token = jwtConfig.generateToken(savedUser);
-
-        return new LoginResponseDTO(token, savedUser.getName(), savedUser.getEmail());
+        try {
+            User savedUser = userRepository.save(user);
+            String token = jwtConfig.generateToken(savedUser);
+            return new LoginResponseDTO(token, savedUser.getName(), savedUser.getEmail());
+        } catch (DataIntegrityViolationException e) {
+            String message = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
+            if (message.contains("email")) {
+                throw new EmailAlreadyExistsException(EMAIL_CADASTRADO);
+            } else if (message.contains("cpf")) {
+                throw new CpfAlreadyExistsException(CPF_CADASTRADO);
+            }
+            throw e;
+        }
     }
 
     private void validateUniqueUser(RegisterRequestDTO request) {
