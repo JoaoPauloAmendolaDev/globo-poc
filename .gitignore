@@ -42,7 +42,6 @@ out/
 .env.*.local
 
 ### Database backups ###
-*.sql
 *.dump
 *.tar.gz
 backup/
