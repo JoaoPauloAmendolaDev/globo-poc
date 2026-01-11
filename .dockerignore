@@ -1,0 +1,15 @@
+# Ignorar arquivos desnecessários no build do Docker
+.git
+.gitignore
+.gradle
+build/
+!build/libs/*.jar
+start-docker.bat
+stop-docker.bat
+*.md
+.idea
+*.iml
+.vscode
+node_modules
+*.log
+

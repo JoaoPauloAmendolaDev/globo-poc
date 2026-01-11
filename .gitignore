@@ -35,3 +35,20 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+*.env
+.env.local
+.env.*.local
+
+### Database backups ###
+*.sql
+*.dump
+*.tar.gz
+backup/
+backups/
+
+### Logs ###
+*.log
+logs/
+
