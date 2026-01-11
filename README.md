@@ -44,7 +44,30 @@ Ver logs apenas do banco:
 docker compose logs -f postgres
 ```
 
+Ver logs da aplicação (incluindo Flyway):
+```bash
+docker compose logs -f app
+```
+
+Ver logs do Flyway especificamente:
+```bash
+docker compose logs app | findstr /i "flyway"
+```
+
 Rebuild forçado:
 ```bash
 docker compose up --build --force-recreate
 ```
+
+## Migrations do Flyway
+
+**O Flyway roda automaticamente dentro do container Docker da aplicação** quando ela inicia.
+
+### Configuração
+
+O Flyway está configurado para:
+- ✅ Rodar automaticamente no startup da aplicação (dentro do Docker)
+- ✅ Criar baseline se necessário (`baseline-on-migrate=true`)
+- ✅ Validar migrations antes de aplicar
+- ✅ Logs em DEBUG para máxima visibilidade
+
