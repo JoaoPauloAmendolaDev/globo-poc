@@ -1,10 +1,11 @@
 # Globo Streaming
 
-Aplicação Spring Boot rodando em Docker.
-
+POC (proof of concept) criado na intenção de simular um sistema simples de Streaming,
+é possível rodar todo o sistema com docker, entretanto, podemos rodar apenas o banco e rodar a aplicação localmente também.
+### o script start.bat foi criado para facilitar o start da aplicação utilizando o docker para o banco de dados, flyway e aplicação.
 ## Como rodar
 
-### Iniciar aplicação
+### Iniciar aplicação pelo docker
 
 ```bash
 start.bat
@@ -24,10 +25,12 @@ Ou pressione `Ctrl+C` no terminal e depois:
 docker compose down
 ```
 
-## Acessar
+## Acessar Aplicação
 
 - Aplicação: http://localhost:8080
-- Banco de dados: localhost:5432
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **API Docs (JSON)**: http://localhost:8080/v3/api-docs
+- Banco de dados: localhost:5433
   - Database: `globostreaming`
   - User: `globouser`
   - Password: `globopass123`

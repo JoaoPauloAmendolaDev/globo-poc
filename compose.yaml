@@ -39,6 +39,9 @@ services:
       - SPRING_FLYWAY_PASSWORD=globopass123
       # Logging Configuration
       - LOGGING_LEVEL_ORG_FLYWAYDB=DEBUG
+      # JWT Configuration
+      - JWT_SECRET=Z2xvYm9zdHJlYW1pbmctc2VjcmV0LWtleS1mb3Itand0LWF1dGhlbnRpY2F0aW9uLTI1Ng==
+      - JWT_EXPIRATION=86400000
     depends_on:
       postgres:
         condition: service_healthy
