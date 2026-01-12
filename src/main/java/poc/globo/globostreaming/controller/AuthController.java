@@ -11,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import poc.globo.globostreaming.dto.ErrorResponseDTO;
-import poc.globo.globostreaming.dto.LoginResponseDTO;
-import poc.globo.globostreaming.dto.LoginRequestDTO;
-import poc.globo.globostreaming.dto.RegisterRequestDTO;
+import poc.globo.globostreaming.model.dto.ErrorResponseDTO;
+import poc.globo.globostreaming.model.dto.LoginResponseDTO;
+import poc.globo.globostreaming.model.dto.LoginRequestDTO;
+import poc.globo.globostreaming.model.dto.RegisterRequestDTO;
 import poc.globo.globostreaming.service.AuthService;
 
 @RestController

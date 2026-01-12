@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import poc.globo.globostreaming.entity.User;
+import poc.globo.globostreaming.model.entity.User;
 
 import java.util.Optional;
 

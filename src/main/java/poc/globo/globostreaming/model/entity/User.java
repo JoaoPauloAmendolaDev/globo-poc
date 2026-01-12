@@ -1,4 +1,4 @@
-package poc.globo.globostreaming.entity;
+package poc.globo.globostreaming.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

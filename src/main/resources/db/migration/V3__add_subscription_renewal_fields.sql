@@ -1,0 +1,6 @@
+ALTER TABLE subscriptions
+ADD COLUMN auto_renew BOOLEAN NOT NULL DEFAULT TRUE;
+
+ALTER TABLE subscriptions
+ADD COLUMN renewal_attempts INTEGER NOT NULL DEFAULT 0;
+
