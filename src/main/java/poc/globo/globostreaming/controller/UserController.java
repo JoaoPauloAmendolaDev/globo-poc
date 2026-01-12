@@ -12,9 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import poc.globo.globostreaming.dto.ErrorResponseDTO;
-import poc.globo.globostreaming.dto.UserResponseDTO;
-import poc.globo.globostreaming.entity.User;
+import poc.globo.globostreaming.model.dto.ErrorResponseDTO;
+import poc.globo.globostreaming.model.dto.UserResponseDTO;
+import poc.globo.globostreaming.model.entity.User;
 
 @RestController
 @RequestMapping("/api/users")

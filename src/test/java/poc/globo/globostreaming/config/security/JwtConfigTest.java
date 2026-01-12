@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import poc.globo.globostreaming.entity.User;
+import poc.globo.globostreaming.model.entity.User;
 
 import java.util.Base64;
 

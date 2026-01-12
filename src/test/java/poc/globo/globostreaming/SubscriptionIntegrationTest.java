@@ -2,6 +2,7 @@ package poc.globo.globostreaming;
 
 // Integration tests removed - covered by unit tests
 // See unit tests in:
-// - service/AuthServiceTest.java
 // - service/SubscriptionServiceTest.java
-// - controller/AuthControllerTest.java
+// - service/SubscriptionRenewalServiceTest.java
+// - service/SubscriptionCacheServiceTest.java
+// - controller/SubscriptionControllerTest.java

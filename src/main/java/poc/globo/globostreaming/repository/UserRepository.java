@@ -2,7 +2,7 @@ package poc.globo.globostreaming.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import poc.globo.globostreaming.entity.User;
+import poc.globo.globostreaming.model.entity.User;
 
 import java.util.Optional;
 

@@ -32,6 +32,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.flywaydb:flyway-database-postgresql")
 
+	// Redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("redis.clients:jedis")
+
+	// RabbitMQ
+	implementation("org.springframework.boot:spring-boot-starter-amqp")
+
 	// JWT
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
@@ -47,6 +54,7 @@ dependencies {
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-test-autoconfigure")
 	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-web")

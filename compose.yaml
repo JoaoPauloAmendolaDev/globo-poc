@@ -18,6 +18,41 @@ services:
     networks:
       - globostreaming-network
 
+  redis:
+    image: 'redis:7-alpine'
+    container_name: globostreaming-redis
+    ports:
+      - '6379:6379'
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - globostreaming-network
+
+  rabbitmq:
+    image: 'rabbitmq:3.13-management-alpine'
+    container_name: globostreaming-rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=globouser
+      - RABBITMQ_DEFAULT_PASS=globopass123
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - globostreaming-network
+
   app:
     build:
       context: .
@@ -42,8 +77,20 @@ services:
       # JWT Configuration
       - JWT_SECRET=Z2xvYm9zdHJlYW1pbmctc2VjcmV0LWtleS1mb3Itand0LWF1dGhlbnRpY2F0aW9uLTI1Ng==
       - JWT_EXPIRATION=86400000
+      # Redis Configuration
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      # RabbitMQ Configuration
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=globouser
+      - SPRING_RABBITMQ_PASSWORD=globopass123
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     networks:
       - globostreaming-network
@@ -54,3 +101,5 @@ networks:
 
 volumes:
   postgres-data:
+  redis-data:
+  rabbitmq-data:

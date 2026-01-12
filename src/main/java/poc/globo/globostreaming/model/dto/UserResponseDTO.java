@@ -1,4 +1,4 @@
-package poc.globo.globostreaming.dto;
+package poc.globo.globostreaming.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
