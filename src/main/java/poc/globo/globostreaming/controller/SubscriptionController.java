@@ -118,34 +118,34 @@ public class SubscriptionController {
 
     @GetMapping("/can-access")
     @Operation(summary = "Verifica se usuário pode acessar o serviço",
-               description = "Retorna true se o usuário tem uma assinatura válida (ATIVA ou CANCELADA_PENDENTE)")
+               description = "Retorna dados da assinatura se o usuário tem uma assinatura válida (ATIVA ou CANCELADA_PENDENTE)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Status de acesso retornado"),
-            @ApiResponse(responseCode = "401", description = "Não autenticado",
+            @ApiResponse(responseCode = "200", description = "Usuário tem acesso ao serviço"),
+            @ApiResponse(responseCode = "401", description = "Não autenticado ou sem acesso ao serviço",
                     content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.ErrorResponse.class)))
     })
     public ResponseEntity<Map<String, Object>> canAccess(@AuthenticationPrincipal User user) {
         boolean hasAccess = subscriptionService.userHasAccess(user.getId());
 
+        if (!hasAccess) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         Map<String, Object> response = new HashMap<>();
-        response.put("hasAccess", hasAccess);
+        response.put("hasAccess", true);
         response.put("userId", user.getId());
 
-        if (hasAccess) {
-            try {
-                SubscriptionResponseDTO subscription = subscriptionService.getActiveSubscription(user.getId());
-                response.put("subscription", subscription);
+        try {
+            SubscriptionResponseDTO subscription = subscriptionService.getActiveSubscription(user.getId());
+            response.put("subscription", subscription);
 
-                if (subscription.status() == poc.globo.globostreaming.model.enums.SubscriptionStatus.CANCELADA_PENDENTE) {
-                    response.put("message", "Assinatura cancelada - Acesso válido até " + subscription.expirationDate());
-                } else {
-                    response.put("message", "Assinatura ativa");
-                }
-            } catch (Exception e) {
-                response.put("message", "Sem assinatura ativa");
+            if (subscription.status() == poc.globo.globostreaming.model.enums.SubscriptionStatus.CANCELADA_PENDENTE) {
+                response.put("message", "Assinatura cancelada - Acesso válido até " + subscription.expirationDate());
+            } else {
+                response.put("message", "Assinatura ativa");
             }
-        } else {
-            response.put("message", "Sem acesso ao serviço");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         return ResponseEntity.ok(response);
